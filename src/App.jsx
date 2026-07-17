@@ -83,14 +83,29 @@ const priorityTextColor = {
   medium: "#9B7B18",
   high: "#B04A5A"
 }
+  const [open, setOpen] = useState(false);
 
+ function openDialog() {
+  setOpen(true);
+ }
+
+  function closeDialog() {
+    setOpen(false);
+
+  }
 
 
 
   return (
     <div className="app">
       
-      <NavigationBar/>
+      <NavigationBar 
+       openDialog={openDialog}
+       closeDialog={closeDialog}
+       open={open}
+      />
+    
+      
       
       <main>
         <Board 

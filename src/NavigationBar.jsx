@@ -7,7 +7,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-
+import AddDestinationDialog from './AddDestinationDialog';
+import AddIcon from '@mui/icons-material/Add';
 
 
 
@@ -53,7 +54,7 @@ import SearchIcon from '@mui/icons-material/Search';
     },
     }));
 
-function NavigationBar() {
+function NavigationBar(props) {
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" style={{backgroundColor: "#f7f6f6"}}> 
@@ -76,6 +77,12 @@ function NavigationBar() {
             >
                 Travel <span style={{color: "#4a3d8c"}}>Bucket</span> List
             </Typography>
+            <AddDestinationDialog 
+                openDialog={props.openDialog}
+                closeDialog={props.closeDialog}
+                open={props.open}
+                
+             />
             <Search>
                 <SearchIconWrapper>
                 <SearchIcon sx={{color:"#393e46" }} />
@@ -84,6 +91,7 @@ function NavigationBar() {
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 sx={{color:"#393e46" }}
+
               
                 />
             </Search>

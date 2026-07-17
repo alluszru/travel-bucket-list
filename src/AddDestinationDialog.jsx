@@ -8,6 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import AddIcon from '@mui/icons-material/Add';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -18,32 +19,26 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-function AddDestinationDialog() {
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+function AddDestinationDialog(props) {
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
+      <Button onClick={props.openDialog}>
+        <AddIcon />
       </Button>
       <BootstrapDialog
-        onClose={handleClose}
+        onClose={props.closeDialog}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={props.open}
+        
+        
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Modal title
         </DialogTitle>
         <IconButton
-          aria-label="close"
-          onClick={handleClose}
+          onClick={props.closeDialog}
+        
           sx={(theme) => ({
             position: 'absolute',
             right: 8,
@@ -70,7 +65,7 @@ function AddDestinationDialog() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={props.closeDialog}>
             Save changes
           </Button>
         </DialogActions>
