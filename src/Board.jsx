@@ -7,8 +7,8 @@ function Board(props) {
 return (
     <div className="board">
       {props.columns.map((column) => {
-        const cardsForColumn = props.cards.filter(
-          (card) => card.status === column
+        const cardsForColumn = props.destinations.filter(
+          (destination) => destination.status === column
         );
 
         return (

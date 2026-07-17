@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import NavigationBar from './NavigationBar';
 import Board from './Board';
+import AddDestinationDialog from './AddDestinationDialog';
 
 function App() {
 
@@ -13,63 +14,63 @@ const columnsLabelImage = {
   Visited: "🌏"
 }
 
-const cards = [
+const [destinations, setDestinantions] = useState([ 
   {
-  id: 1,
+  id: crypto.randomUUID(),
   place: "London",
   priority: "low",
   status: "Visited",
   date: "May 2027"
   },
   {
-  id: 2,
+  id: crypto.randomUUID(),
   place: "Oman",
   priority: "high",
   status: "Dreaming",
   date: "May 2027"
   },
    {
-  id: 3,
+  id: crypto.randomUUID(),
   place: "Spain",
   priority: "medium",
   status: "Planning",
   date: "May 2027"
   },
   {
-  id: 4,
+  id: crypto.randomUUID(),
   place: "Spain",
   priority: "medium",
   status: "Planning",
   date: "May 2027"
   },
      {
-  id: 5,
+  id: crypto.randomUUID(),
   place: "Spain",
   priority: "medium",
   status: "Planning",
   date: "May 2027"
   },
      {
-  id: 6,
+  id: crypto.randomUUID(),
   place: "Spain",
   priority: "medium",
   status: "Visited",
   date: "May 2027"
   },
-  {id: 7,
+  {id: crypto.randomUUID(),
   place: "Spain",
   priority: "medium",
   status: "Planning",
   date: "May 2027"
   },
      {
-  id: 8,
+  id: crypto.randomUUID(),
   place: "Spain",
   priority: "medium",
   status: "Planning",
   date: "May 2027"
-  }
-];
+  }]
+);
 
 const priorityColor = {
   low: "#EAF7EF",
@@ -93,7 +94,7 @@ const priorityTextColor = {
       
       <main>
         <Board 
-          cards={cards}
+          destinations={destinations}
           columns={columns}
           priorityColor={priorityColor}
           priorityTextColor={priorityTextColor}
