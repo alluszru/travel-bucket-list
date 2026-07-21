@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AddDestinationDialog from './AddDestinationDialog';
 import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
 
 
 
@@ -77,12 +77,9 @@ function NavigationBar(props) {
             >
                 Travel <span style={{color: "#4a3d8c"}}>Bucket</span> List
             </Typography>
-            <AddDestinationDialog 
-                openDialog={props.openDialog}
-                closeDialog={props.closeDialog}
-                open={props.open}
-                
-             />
+            <Button onClick={props.openDialog}>
+                  <AddIcon />
+            </Button>
             <Search>
                 <SearchIconWrapper>
                 <SearchIcon sx={{color:"#393e46" }} />

@@ -97,9 +97,7 @@ function AddDestinationDialog(props) {
 
   return (
     <React.Fragment>
-      <Button onClick={props.openDialog}>
-        <AddIcon />
-      </Button>
+    
       <BootstrapDialog
         onClose={props.closeDialog}
         aria-labelledby="customized-dialog-title"

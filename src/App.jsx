@@ -96,6 +96,23 @@ const priorityTextColor = {
 
   }
 
+function handleAddDestination(newDestination) {
+  const newId = crypto.randomUUID();
+   newDestination = {
+    id: newId,
+  place: formData.place,
+  priority: formData.priority,
+  status: formData.status,
+  date: formData.date
+  }
+
+  setCards((prev) => {
+    return[...prev, ...newDestination]
+  });
+
+  setFromData(null);
+}
+
 
 
   return (
@@ -106,6 +123,13 @@ const priorityTextColor = {
        closeDialog={closeDialog}
        open={open}
       />
+        <AddDestinationDialog 
+                openDialog={openDialog}
+                closeDialog={closeDialog}
+                open={open}
+                onSave={handleAddDestination}
+                
+             />
     
       
       
