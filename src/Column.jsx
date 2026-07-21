@@ -21,13 +21,16 @@ function Column(props) {
                      date={card.date}
                      priorityColor={props.priorityColor}
                     priorityTextColor={props.priorityTextColor}
+                    openDialog={props.openDialog}
+                    onClick={() => props.onOpenDestination(card)}
     
 
                      />)
                     })}
                 </div>
                 <div>
-                    <AddButton></AddButton>
+                    <AddButton open={props.open}
+            openDialog={props.openDialog}></AddButton>
                 </div>
 
             </div>

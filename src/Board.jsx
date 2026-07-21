@@ -19,6 +19,10 @@ return (
             priorityColor={props.priorityColor}
             priorityTextColor={props.priorityTextColor}
             columnsLabelImage={props.columnsLabelImage}
+            open={props.open}
+            openDialog={props.openDialog}
+            onOpenDestination={props.onOpenDestination}
+    
           />
         );
       })}

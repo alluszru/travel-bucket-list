@@ -20,6 +20,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import FormHelperText from '@mui/material/FormHelperText';
+import { useEffect } from 'react';
 
 
 
@@ -33,7 +34,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-function AddDestinationDialog(props) {
+function DestinationDialog(props) {
 
     const initialFormData = {
                     place: "",
@@ -43,6 +44,22 @@ function AddDestinationDialog(props) {
                     };
 
     const [formData, setFormData]= useState(initialFormData);
+
+    useEffect(() => {
+  
+    if (props.selectedDestination) {
+      setFormData({
+        ...props.selectedDestination,
+         date: props.selectedDestination.date
+        ? dayjs(props.selectedDestination.date)
+        : null,
+      });
+    }
+  }, 
+  [props.selectedDestination]);
+
+
+
 
     function handleChange(event) {
    
@@ -95,8 +112,7 @@ function AddDestinationDialog(props) {
         props.closeDialog();
     }
 
-
-
+  
   return (
     <React.Fragment>
     
@@ -174,4 +190,4 @@ function AddDestinationDialog(props) {
   );
 }
 
-export default AddDestinationDialog;
+export default DestinationDialog;

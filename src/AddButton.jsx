@@ -1,6 +1,6 @@
-function AddButton() {
+function AddButton(props) {
     return (
-    <button className="addButton"> + Add destination</button>
+    <button className="addButton" onClick={props.openDialog} > + Add destination</button>
     );
 };
 
