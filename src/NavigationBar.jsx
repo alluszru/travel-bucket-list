@@ -88,8 +88,6 @@ function NavigationBar(props) {
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 sx={{color:"#393e46" }}
-
-              
                 />
             </Search>
             </Toolbar>

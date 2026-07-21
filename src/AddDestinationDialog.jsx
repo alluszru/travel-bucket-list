@@ -8,13 +8,10 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import FilledInput from '@mui/material/FilledInput';
 import FlightTakeoffTwoToneIcon from '@mui/icons-material/FlightTakeoffTwoTone';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -38,13 +35,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 function AddDestinationDialog(props) {
 
+    const initialFormData = {
+                    place: "",
+                    status: "",
+                    priority: "",
+                    date: null,
+                    };
 
-    const [formData, setFormData]= useState({
-      place: '',
-      status: '',
-      priority: '', 
-      date: null
-    });
+    const [formData, setFormData]= useState(initialFormData);
 
     function handleChange(event) {
    
@@ -90,7 +88,11 @@ function AddDestinationDialog(props) {
             return;
         }
 
-        console.log("Form is valid")
+        props.onSave(formData);
+
+    
+       setFormData(initialFormData);
+        props.closeDialog();
     }
 
 

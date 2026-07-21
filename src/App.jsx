@@ -97,20 +97,13 @@ const priorityTextColor = {
   }
 
 function handleAddDestination(newDestination) {
-  const newId = crypto.randomUUID();
-   newDestination = {
-    id: newId,
-  place: formData.place,
-  priority: formData.priority,
-  status: formData.status,
-  date: formData.date
-  }
+    const destination = {
+      ...newDestination,
+      id: crypto.randomUUID(),
+      date: newDestination.date?.format("MMM YYYY")
+  };
 
-  setCards((prev) => {
-    return[...prev, ...newDestination]
-  });
-
-  setFromData(null);
+  setDestinantions((prev) => [...prev, destination]);
 }
 
 
@@ -119,20 +112,16 @@ function handleAddDestination(newDestination) {
     <div className="app">
       
       <NavigationBar 
-       openDialog={openDialog}
-       closeDialog={closeDialog}
        open={open}
+       openDialog={openDialog}
       />
-        <AddDestinationDialog 
-                openDialog={openDialog}
-                closeDialog={closeDialog}
-                open={open}
-                onSave={handleAddDestination}
-                
-             />
+
+      <AddDestinationDialog 
+        closeDialog={closeDialog}
+        open={open}
+        onSave={handleAddDestination}
+      />
     
-      
-      
       <main>
         <Board 
           destinations={destinations}
