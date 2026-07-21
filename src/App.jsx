@@ -14,6 +14,8 @@ const columnsLabelImage = {
   Visited: "🌏"
 }
 
+
+
 const [destinations, setDestinantions] = useState([ 
   {
   id: crypto.randomUUID(),
