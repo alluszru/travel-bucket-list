@@ -22,55 +22,63 @@ const [destinations, setDestinantions] = useState([
   place: "London",
   priority: "Low",
   status: "Visited",
-  date: "May 2027"
+  date: "May 2027",
+  favorite: false
   },
   {
   id: crypto.randomUUID(),
   place: "Oman",
   priority: "High",
   status: "Dreaming",
-  date: "May 2027"
+  date: "May 2027",
+  favorite: false
   },
    {
   id: crypto.randomUUID(),
   place: "Spain",
   priority: "Medium",
   status: "Planning",
-  date: "May 2027"
+  date: "May 2027",
+  favorite: false
   },
   {
   id: crypto.randomUUID(),
   place: "Spain",
   priority: "Medium",
   status: "Planning",
-  date: "May 2027"
+  date: "May 2027",
+  favorite: false
   },
      {
   id: crypto.randomUUID(),
   place: "Spain",
   priority: "Medium",
   status: "Planning",
-  date: "May 2027"
+  date: "May 2027",
+  favorite: false
   },
      {
   id: crypto.randomUUID(),
   place: "Spain",
   priority: "Medium",
   status: "Visited",
-  date: "May 2027"
+  date: "May 2027",
+  favorite: false
   },
   {id: crypto.randomUUID(),
   place: "Spain",
   priority: "Medium",
   status: "Planning",
-  date: "May 2027"
+  date: "May 2027",
+  favorite: false
   },
      {
   id: crypto.randomUUID(),
   place: "Spain",
   priority: "Medium",
   status: "Planning",
-  date: "May 2027"
+  date: "May 2027",
+  favorite: false
   }]
 );
 
@@ -129,6 +137,19 @@ function handleSaveDestination(destination) {
   }
 }
 
+function changeFavorite(destination) {
+    const destinationToSave = {
+    ...destination,
+    favorite: !destination.favorite
+  };
+  setDestinantions((prev) => 
+    prev.map((item) => {
+      if (item.id === destination.id) {
+        return destinationToSave
+      }
+      return item;
+    }))
+}
 
 
 
@@ -158,6 +179,7 @@ function handleSaveDestination(destination) {
           open={open}
           openDialog={openDialog}
           onOpenDestination={openDestination}
+          changeFavorite={changeFavorite}
         
     
         />

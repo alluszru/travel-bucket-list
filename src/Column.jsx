@@ -19,10 +19,12 @@ function Column(props) {
                      place = {card.place}
                      priority={card.priority}
                      date={card.date}
+                     favorite={card.favorite}
                      priorityColor={props.priorityColor}
                     priorityTextColor={props.priorityTextColor}
                     openDialog={props.openDialog}
                     onClick={() => props.onOpenDestination(card)}
+                    changeFavorite = {() => props.changeFavorite(card)}
     
 
                      />)

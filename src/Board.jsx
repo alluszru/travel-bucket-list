@@ -22,6 +22,7 @@ return (
             open={props.open}
             openDialog={props.openDialog}
             onOpenDestination={props.onOpenDestination}
+            changeFavorite={props.changeFavorite}
     
           />
         );
