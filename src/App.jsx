@@ -151,6 +151,16 @@ function changeFavorite(destination) {
     }))
 }
 
+function handleDeleteDestination(id) {
+
+  setDestinantions((prev) => {
+    return prev.filter((destiantion) => id !== destiantion.id
+       );
+      });
+
+  setSelectedDestination(null);
+}
+
 
 
   return (
@@ -167,6 +177,7 @@ function changeFavorite(destination) {
         onSave={handleSaveDestination}
         selectedDestination={selectedDestination}
         destinations={destinations}
+        onDelete={handleDeleteDestination}
       />
     
       <main>
@@ -180,6 +191,7 @@ function changeFavorite(destination) {
           openDialog={openDialog}
           onOpenDestination={openDestination}
           changeFavorite={changeFavorite}
+          
         
     
         />

@@ -21,6 +21,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useEffect } from 'react';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 
 
@@ -111,6 +112,12 @@ function DestinationDialog(props) {
       props.closeDialog();
     }
 
+    function handleDelete() {
+      props.onDelete(props.selectedDestination.id)
+      props.closeDialog();
+      
+    }
+
   
   return (
     <React.Fragment>
@@ -177,6 +184,9 @@ function DestinationDialog(props) {
                 
         </DialogContent>
         <DialogActions>
+        <IconButton>
+          <DeleteOutlineOutlinedIcon color="error" onClick={handleDelete} />
+        </IconButton>
         <Button autoFocus onClick={props.closeDialog}>
             Cancel 
           </Button>
