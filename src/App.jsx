@@ -104,14 +104,29 @@ const priorityTextColor = {
       openDialog();
   }
 
-function handleAddDestination(newDestination) {
-    const destination = {
-      ...newDestination,
-      id: crypto.randomUUID(),
-      date: newDestination.date?.format("MMM YYYY")
+function handleSaveDestination(destination) {
+  const destinationToSave = {
+    ...destination,
+    date: destination.date?.format("YYYY-MM-DD"),
   };
 
-  setDestinantions((prev) => [...prev, destination]);
+  if (selectedDestination) {
+    setDestinantions((prev) => 
+      prev.map((item) => {
+        if (item.id === destination.id) {
+        return destinationToSave;
+        }
+      return item;
+      })
+    );
+    } else {
+       const newDestination = {
+      ...destinationToSave,
+      id: crypto.randomUUID(),
+      date: destination.date?.format("YYYY-MM-DD")
+    };
+    setDestinantions((prev) => [...prev, newDestination]);
+  }
 }
 
 
@@ -128,8 +143,9 @@ function handleAddDestination(newDestination) {
       <DestinationDialog 
         closeDialog={closeDialog}
         open={open}
-        onSave={handleAddDestination}
+        onSave={handleSaveDestination}
         selectedDestination={selectedDestination}
+        destinations={destinations}
       />
     
       <main>

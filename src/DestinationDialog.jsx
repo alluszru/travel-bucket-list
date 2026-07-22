@@ -104,12 +104,11 @@ function DestinationDialog(props) {
         if (!validateForm()) {
             return;
         }
-
-        props.onSave(formData);
-
-    
-       setFormData(initialFormData);
-        props.closeDialog();
+      
+         props.onSave(formData);
+        
+      setFormData(initialFormData);
+      props.closeDialog();
     }
 
   
