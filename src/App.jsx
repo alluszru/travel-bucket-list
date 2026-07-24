@@ -2,7 +2,8 @@ import { useState } from 'react';
 import NavigationBar from './NavigationBar';
 import Board from './Board';
 import DestinationDialog from './DestinationDialog';
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, DragOverlay } from "@dnd-kit/core";
+import Card from './Card';
 
 function App() {
 
@@ -95,6 +96,7 @@ const priorityTextColor = {
   const [open, setOpen] = useState(false);
 
   const [selectedDestination, setSelectedDestination] = useState(null);
+  const [draggedDestination, setDraggedDestination] = useState(null);
 
  function openDialog() {
   setOpen(true);
@@ -160,7 +162,35 @@ function handleDeleteDestination(id) {
   setSelectedDestination(null);
 }
 
+function onDragStart(event) {
+  const destination = destinations.find(
+    (destination) => destination.id === event.active.id)
+    console.log(destination)
 
+    setDraggedDestination(destination);
+}
+
+function onDragEnd (event) {
+
+   if (!event.over) {
+    setDraggedDestination(null);
+    return
+   }
+
+  const destiantionToSave = {
+    ...draggedDestination,
+    status: event.over.id
+  }
+
+  setDestinantions((prev) => 
+  prev.map((item) => {
+    if (item.id === event.active.id) {
+      return destiantionToSave
+    }
+    return item;
+  }))
+  setDraggedDestination(null);
+}
 
   return (
     <div className="app">
@@ -177,7 +207,7 @@ function handleDeleteDestination(id) {
         onDelete={handleDeleteDestination}
       />
       <main>
-        <DndContext>
+        <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
           <Board 
             destinations={destinations}
             columns={columns}
@@ -189,6 +219,16 @@ function handleDeleteDestination(id) {
             onOpenDestination={openDestination}
             changeFavorite={changeFavorite}
           />
+          <DragOverlay>
+            {draggedDestination && <Card 
+              id={draggedDestination.id}
+              place={draggedDestination.place}
+              priority={draggedDestination.priority}
+              date={draggedDestination.date}
+              favorite={draggedDestination.favorite}
+              priorityColor={priorityColor}
+              priorityTextColor={priorityTextColor}/>}
+          </DragOverlay>
         </DndContext>
       </main>
     </div>

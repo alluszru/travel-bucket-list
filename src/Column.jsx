@@ -4,9 +4,16 @@ import { useDroppable } from "@dnd-kit/core";
 
 function Column(props) {
 
+
+const {
+    setNodeRef, 
+    isOver,
+} = useDroppable({
+    id: props.name
+})
     return (
         <>
-            <div className="column">
+            <div className={`column ${isOver ? "column-active" : ""}`} ref={setNodeRef}>
                 <div className="columnLabel"> 
                    {props.columnsLabelImage[props.name]} {props.name}
                    
