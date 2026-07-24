@@ -2,6 +2,7 @@ import { useState } from 'react';
 import NavigationBar from './NavigationBar';
 import Board from './Board';
 import DestinationDialog from './DestinationDialog';
+import { DndContext } from "@dnd-kit/core";
 
 function App() {
 
@@ -13,8 +14,6 @@ const columnsLabelImage = {
   Booked: "✈️",
   Visited: "🌏"
 }
-
-
 
 const [destinations, setDestinantions] = useState([ 
   {
@@ -165,12 +164,10 @@ function handleDeleteDestination(id) {
 
   return (
     <div className="app">
-      
       <NavigationBar 
        open={open}
        openDialog={openDialog}
       />
-
       <DestinationDialog 
         closeDialog={closeDialog}
         open={open}
@@ -179,24 +176,21 @@ function handleDeleteDestination(id) {
         destinations={destinations}
         onDelete={handleDeleteDestination}
       />
-    
       <main>
-        <Board 
-          destinations={destinations}
-          columns={columns}
-          priorityColor={priorityColor}
-          priorityTextColor={priorityTextColor}
-          columnsLabelImage={columnsLabelImage}
-          open={open}
-          openDialog={openDialog}
-          onOpenDestination={openDestination}
-          changeFavorite={changeFavorite}
-          
-        
-    
-        />
+        <DndContext>
+          <Board 
+            destinations={destinations}
+            columns={columns}
+            priorityColor={priorityColor}
+            priorityTextColor={priorityTextColor}
+            columnsLabelImage={columnsLabelImage}
+            open={open}
+            openDialog={openDialog}
+            onOpenDestination={openDestination}
+            changeFavorite={changeFavorite}
+          />
+        </DndContext>
       </main>
-
     </div>
   );
 };

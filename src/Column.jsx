@@ -1,5 +1,6 @@
 import Card from "./Card";
 import AddButton from "./AddButton";
+import { useDroppable } from "@dnd-kit/core";
 
 function Column(props) {
 
