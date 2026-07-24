@@ -1,6 +1,10 @@
 import Card from "./Card";
 import AddButton from "./AddButton";
 import { useDroppable } from "@dnd-kit/core";
+import {SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+
 
 function Column(props) {
 
@@ -18,6 +22,8 @@ const {
                    {props.columnsLabelImage[props.name]} {props.name}
                    
                 </div>
+                <SortableContext  items={props.cards.map((card) => card.id)}
+                     strategy={verticalListSortingStrategy} >
                 <div className="cardsSpace"> 
                     {props.cards.map((card) => {
                     return (
@@ -38,10 +44,11 @@ const {
                      />)
                     })}
                 </div>
-                <div>
+                </SortableContext>
+              
                     <AddButton open={props.open}
             openDialog={props.openDialog}></AddButton>
-                </div>
+                
 
             </div>
         </>

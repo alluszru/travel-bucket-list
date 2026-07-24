@@ -4,6 +4,7 @@ import Board from './Board';
 import DestinationDialog from './DestinationDialog';
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import Card from './Card';
+import { arrayMove } from '@dnd-kit/sortable';
 
 function App() {
 
@@ -170,27 +171,51 @@ function onDragStart(event) {
     setDraggedDestination(destination);
 }
 
+
 function onDragEnd (event) {
+
+  const {active, over} = event;
 
    if (!event.over) {
     setDraggedDestination(null);
     return
    }
 
-  const destiantionToSave = {
-    ...draggedDestination,
-    status: event.over.id
+
+  const oldIndex = destinations.findIndex(
+    (d) => d.id === active.id
+  );
+
+  const newIndex = destinations.findIndex(
+    (d) => d.id === over.id
+  );
+
+  const overDestination = destinations.find(
+  (d) => d.id === over.id
+  );
+  
+  if (overDestination.status === draggedDestination.status) {
+      setDestinantions((prev) => arrayMove(prev, oldIndex, newIndex));
+    } else {
+        const updatedDestinations = destinations.map((item) => {
+      if (item.id === active.id) {
+        return {
+          ...item,
+          status: overDestination.status,
+        };
+      }
+
+      return item;
+    });
+      setDestinantions((prev) => arrayMove(updatedDestinations, oldIndex, newIndex));
   }
 
-  setDestinantions((prev) => 
-  prev.map((item) => {
-    if (item.id === event.active.id) {
-      return destiantionToSave
-    }
-    return item;
-  }))
   setDraggedDestination(null);
-}
+  }
+
+  
+ 
+  
 
   return (
     <div className="app">
