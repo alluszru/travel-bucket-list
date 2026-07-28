@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import FlightTakeoffTwoToneIcon from '@mui/icons-material/FlightTakeoffTwoTone';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -20,18 +20,61 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import FormHelperText from '@mui/material/FormHelperText';
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-
+import InputLabel from '@mui/material/InputLabel';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(3),
+  "& .MuiPaper-root": {
+    backgroundColor: "var(--color-surface)",
+    color: "var(--color-text-primary)",
+    border: "1px solid var(--color-border)",
+    borderRadius: "var(--radius-md)",
+    width: "560px",
+    maxWidth: "90vw",
   },
-  '& .MuiDialogActions-root': {
+
+  "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
+
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(2),
+    borderTop: "1px solid var(--color-border)",
+  },
+
+  "& .MuiInputBase-root": {
+  color: "var(--color-text-primary)",
+},
+
+"& .MuiOutlinedInput-notchedOutline": {
+  borderColor: "var(--color-border)",
+},
+
+"& .MuiOutlinedInput-root": {
+  color: "var(--color-text-primary)",
+
+  "& fieldset": {
+    borderColor: "var(--color-border)",
+  },
+
+  "&:hover fieldset": {
+    borderColor: "var(--color-primary)",
+  },
+
+  "&.Mui-focused fieldset": {
+    borderColor: "var(--color-primary)",
+  },
+},
+
+"& .MuiInputLabel-root": {
+  color: "var(--color-text-secondary)",
+},
+
+"& .MuiInputLabel-root.Mui-focused": {
+  color: "var(--color-primary)",
+},
 }));
 
 
@@ -121,16 +164,19 @@ function DestinationDialog(props) {
   
   return (
     <React.Fragment>
+   
     
       <BootstrapDialog
         onClose={props.closeDialog}
         aria-labelledby="customized-dialog-title"
-        open={props.open}
-        className='dialog'
-        
+        open={props.open}      
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          <FlightTakeoffTwoToneIcon/> Add destination
+        <DialogTitle sx={{ m: 0, p: 2, color:"var(--color-primary)"}} id="customized-dialog-title">
+          <FlightTakeoffIcon sx={{
+            mr: 1,
+          color: "var(--color-primary)", 
+           verticalAlign: "middle",
+            }}/> Add destination
         </DialogTitle>
         <IconButton
           onClick={props.closeDialog}
@@ -139,23 +185,33 @@ function DestinationDialog(props) {
             position: 'absolute',
             right: 8,
             top: 8,
-            color: theme.palette.grey[500],
+            color:("var(--color-text-primary)")
           })}
         >
           <CloseIcon />
-        </IconButton>
+        </IconButton>   
+        
         <DialogContent dividers>
+         <div className="dialogForm">
+      
            
-         <FormControl fullWidth>
-            <Typography>Place</Typography>
-            <TextField  value={formData.place}  onChange={handleChange} name="place" className='formField' error={Boolean(errors.place)} helperText={errors.place}/>
-        </FormControl>
+        
+          <TextField  fullWidth
+          value={formData.place}  
+          onChange={handleChange} 
+          name="place" 
+          variant="outlined" 
+          label="Place" 
+          className='formField' 
+          error={Boolean(errors.place)} 
+          helperText={errors.place}/>
+       
         
         <FormControl fullWidth>
-             <TextField  id="standard-basic" name="status" label="Status" variant="standard"  
-   />
+             <InputLabel id="status-label">Status</InputLabel>
+  
                 <Select value={formData.status}
-    onChange={handleChange} className='formField' name="status">
+    onChange={handleChange} label="Status" name="status" labelId="status-label">
                     <MenuItem value={"Dreaming"}>Dreaming</MenuItem>
                     <MenuItem value={"Planning"}>Planning</MenuItem>
                     <MenuItem value={"Booked"}>Booked</MenuItem>
@@ -164,9 +220,10 @@ function DestinationDialog(props) {
         </FormControl>
         
         <FormControl fullWidth error={Boolean(errors.priority)} >
-            <TextField  id="standard-basic"  label="Priority" variant="standard" />
+             <InputLabel>Priority</InputLabel>
+  
             
-                <Select value={formData.priority} name="priority" onChange={handleChange} className='formField'  >
+                <Select value={formData.priority} name="priority" onChange={handleChange}  label="Priority"  >
                     <MenuItem value={"Low"} >Low</MenuItem>
                     <MenuItem value={"Medium"} >Medium</MenuItem>
                     <MenuItem value={"High"}>High</MenuItem>
@@ -176,23 +233,34 @@ function DestinationDialog(props) {
 
          <FormControl fullWidth>
                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
-                        <DatePicker  value={formData.date} onChange={handleDateChange} name="date" label="Pick a date" />
-                    </DemoContainer>
+    
+                        <DatePicker  
+                        value={formData.date} 
+                        onChange={handleDateChange} 
+                        name="date" label="Pick a date"
+                          slotProps={{textField: {
+                            fullWidth: true,},
+                        }}/>
                     </LocalizationProvider>
         </FormControl>
-                
+              </div>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ justifyContent: "space-between", padding: 2, }}>
         <IconButton>
-          <DeleteOutlineOutlinedIcon color="error" onClick={handleDelete} />
+          <DeleteOutlineOutlinedIcon sx={{
+        color: "var(--color-primary)"}} onClick={handleDelete} />
         </IconButton>
-        <Button autoFocus onClick={props.closeDialog}>
+        <div>
+        <Button autoFocus onClick={props.closeDialog} variant="text" sx={{
+        color: "var(--color-primary)"}}>
             Cancel 
           </Button>
-          <Button autoFocus onClick={handleSave}>
+          <Button autoFocus onClick={handleSave} variant="contained"  sx={{
+        backgroundColor: "var(--color-primary)"
+    }}  >
             Save 
           </Button>
+          </div>
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>

@@ -46,7 +46,7 @@ const {
                 </div>
                 </SortableContext>
               
-                    <AddButton open={props.open}
+                    <AddButton className="addButton"open={props.open}
             openDialog={props.openDialog}></AddButton>
                 
 

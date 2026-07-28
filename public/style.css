@@ -86,6 +86,23 @@ select {
 
 }
 
+.dark {
+
+  --color-background: rgb(22, 24, 29);
+  --color-surface: rgb(33, 37, 43);
+
+  --color-primary: rgb(206, 182, 255);
+  --color-accent: rgb(164, 130, 255);
+
+  --color-text-primary: rgb(245, 245, 247);
+  --color-text-secondary: rgb(170, 176, 186);
+
+  --color-border: rgb(64, 69, 78);
+
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+
+}
+
 body {
 min-height: 100vh;
 background-color: var(--color-background);
@@ -96,10 +113,49 @@ line-height: 1.5;
 
 }
 
+body,
+.card,
+.column,
+button {
+    transition: background-color .25s ease,
+                color .25s ease,
+                border-color .25s ease;
+}
+
+.MuiIconButton-root {
+    color: var(--color-text-primary);
+}
+
+.dialogForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    
+    
+}
+
+
 .app {
   display:flex; 
   flex-direction: column; 
   min-height: 100vh;;
+}
+
+.appBar {
+  background-color: var(--color-background);
+
+}
+
+.addButton .MuiSvgIcon-root{
+  color: var(--color-accent);
+}
+
+.themeButton .MuiSvgIcon-root {
+  color: var(--color-text-primary);
+}
+
+.accentText {
+    color: var(--color-primary);
 }
 
 main {

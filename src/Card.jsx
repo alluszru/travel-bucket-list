@@ -24,7 +24,7 @@ function Card(props) {
         <div ref={setNodeRef} style={style} className="card" onClick={props.onClick} >
             <div className="cardHeader">
                 <h3 className="cardLabel">{props.place}</h3>
-                <IconButton ref={setActivatorNodeRef} {...listeners} {...attributes}>
+                <IconButton className="themeButton" ref={setActivatorNodeRef} {...listeners} {...attributes}>
                 <DragIndicatorOutlinedIcon className="cardDragIndicator"  />
                 </IconButton>
            </div>
@@ -37,7 +37,7 @@ function Card(props) {
                 </div>
 
                 <div className="cardFavorite">
-                    <IconButton  onClick={(event) => {event.stopPropagation(); 
+                    <IconButton className="themeButton"   onClick={(event) => {event.stopPropagation(); 
                         props.changeFavorite()}}>
                     {props.favorite ?<StarOutlinedIcon/> : <StarBorderPurple500OutlinedIcon/>}
                     </IconButton>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NavigationBar from './NavigationBar';
 import Board from './Board';
 import DestinationDialog from './DestinationDialog';
@@ -98,6 +98,16 @@ const priorityTextColor = {
 
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [draggedDestination, setDraggedDestination] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  function toggleDarkMode() {
+    setIsDarkMode((prev) => !prev)
+  }
+
+  useEffect(() => {
+  document.body.classList.toggle("dark", isDarkMode);
+}, [isDarkMode]);
+  
 
  function openDialog() {
   setOpen(true);
@@ -218,12 +228,14 @@ function onDragEnd (event) {
   
 
   return (
-    <div className="app">
+    <div className={`app ${isDarkMode ? "dark" : " "}`}>
       <NavigationBar 
        open={open}
        openDialog={openDialog}
+       isDarkMode={isDarkMode}
+       toggleDarkMode={toggleDarkMode}
       />
-      <DestinationDialog 
+      <DestinationDialog
         closeDialog={closeDialog}
         open={open}
         onSave={handleSaveDestination}

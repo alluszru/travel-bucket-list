@@ -9,6 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 
 
@@ -57,39 +59,48 @@ import Button from '@mui/material/Button';
 function NavigationBar(props) {
     return (
         <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" style={{backgroundColor: "#f7f6f6"}}> 
+        <AppBar className="appBar" position="static"   
+        sx={{
+        backgroundColor: "var(--color-surface)",
+        color: "var(--color-text-primary)",
+        boxShadow: "var(--shadow-sm)",
+    }}> 
             <Toolbar>
-            <IconButton
-                color="#222831"
+            <IconButton className="themeButton"
+                
                 size="large"
                 edge="start"
                 aria-label="open drawer"
-                sx={{ mr: 2 }}
+                sx={{ mr: 2,
+                    color: "var(--color-text-primary)"
+                }}
             >
                 <MenuIcon />
             </IconButton>
-            <Typography color="#222831"
-
+            <Typography 
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: "#222831" }}
+                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: "var(--color-text-primary)" }}
             >
-                Travel <span style={{color: "#4a3d8c"}}>Bucket</span> List
+                Travel <span className="accentText">Bucket</span> List
             </Typography>
-            <Button onClick={props.openDialog}>
+            <Button className="addButton" onClick={props.openDialog}>
                   <AddIcon />
             </Button>
             <Search>
                 <SearchIconWrapper>
-                <SearchIcon sx={{color:"#393e46" }} />
+                <SearchIcon sx={{color:"var(--color-text-secondary)" }} />
                 </SearchIconWrapper>
                 <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
-                sx={{color:"#393e46" }}
+                sx={{color:"var(--color-text-secondary)" }}
                 />
             </Search>
+            <IconButton className="themeButton" onClick={() => props.toggleDarkMode()}>
+                {props.isDarkMode ? <LightModeIcon/> : <DarkModeIcon/>}
+            </IconButton>
             </Toolbar>
         </AppBar>
         </Box>
