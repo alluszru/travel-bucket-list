@@ -37,9 +37,9 @@ const [destinations, setDestinantions] = useState([
   },
    {
   id: crypto.randomUUID(),
-  place: "Spain",
-  priority: "Medium",
-  status: "Planning",
+  place: "Greece",
+  priority: "High",
+  status: "Dreaming",
   date: "May 2027",
   favorite: false
   },
@@ -53,30 +53,30 @@ const [destinations, setDestinantions] = useState([
   },
      {
   id: crypto.randomUUID(),
-  place: "Spain",
+  place: "Croatia",
   priority: "Medium",
-  status: "Planning",
+  status: "Booked",
   date: "May 2027",
   favorite: false
   },
      {
   id: crypto.randomUUID(),
-  place: "Spain",
-  priority: "Medium",
-  status: "Visited",
+  place: "Bratislava",
+  priority: "Low",
+  status: "Planning",
   date: "May 2027",
   favorite: false
   },
   {id: crypto.randomUUID(),
-  place: "Spain",
-  priority: "Medium",
-  status: "Planning",
+  place: "Sweden",
+  priority: "High",
+  status: "Booked",
   date: "May 2027",
   favorite: false
   },
      {
   id: crypto.randomUUID(),
-  place: "Spain",
+  place: "France",
   priority: "Medium",
   status: "Planning",
   date: "May 2027",
@@ -100,6 +100,7 @@ const priorityTextColor = {
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [draggedDestination, setDraggedDestination] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [search, setSearch] = useState("");
 
   function toggleDarkMode() {
     setIsDarkMode((prev) => !prev)
@@ -277,6 +278,8 @@ function onDragEnd (event) {
        openDialog={openDialog}
        isDarkMode={isDarkMode}
        toggleDarkMode={toggleDarkMode}
+       search={search}
+       setSearch={setSearch}
       />
       <DestinationDialog
         closeDialog={closeDialog}
@@ -298,6 +301,8 @@ function onDragEnd (event) {
             openDialog={openDialog}
             onOpenDestination={openDestination}
             changeFavorite={changeFavorite}
+            search={search}
+            setSearch={setSearch}
           />
           <DragOverlay>
             {draggedDestination && <Card 

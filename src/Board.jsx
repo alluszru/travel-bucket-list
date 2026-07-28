@@ -7,10 +7,18 @@ function Board(props) {
 return (
     <div className="board">
       {props.columns.map((column) => {
-        const cardsForColumn = props.destinations.filter(
-          (destination) => destination.status === column
-        );
+        const cardsForColumn = props.destinations
+        .filter((destination) => destination.status === column)
+        .filter((destination) => {
+          const search = props.search.toLowerCase();
 
+          return (
+            destination.place.toLowerCase().includes(search) ||
+            destination.priority.toLowerCase().includes(search) ||
+            destination.status.toLowerCase().includes(search)
+          );
+        })
+      
         return (
           <Column
             key={column}

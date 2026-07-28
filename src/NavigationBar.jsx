@@ -56,7 +56,10 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
     },
     }));
 
+   
+
 function NavigationBar(props) {
+     console.log(props.search);
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar className="appBar" position="static"   
@@ -93,9 +96,11 @@ function NavigationBar(props) {
                 <SearchIcon sx={{color:"var(--color-text-secondary)" }} />
                 </SearchIconWrapper>
                 <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
+                placeholder="Search destination, status or priority..."
                 sx={{color:"var(--color-text-secondary)" }}
+                value={props.search}
+                onChange={(event) => props.setSearch(event.target.value)}
+                inputProps={{ 'aria-label': 'search' }}
                 />
             </Search>
             <IconButton className="themeButton" onClick={() => props.toggleDarkMode()}>

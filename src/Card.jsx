@@ -17,7 +17,7 @@ function Card(props) {
         transition,
     }
     
-    console.log(transform)
+ 
 
 
     return (
