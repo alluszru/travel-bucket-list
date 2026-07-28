@@ -6,6 +6,7 @@ import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
 import Card from './Card';
 import { arrayMove } from '@dnd-kit/sortable';
 import { act } from 'react';
+import initialDestinations from './data/destiantion';
 
 function App() {
 
@@ -18,71 +19,23 @@ const columnsLabelImage = {
   Visited: "🌏"
 }
 
-const [destinations, setDestinantions] = useState([ 
-  {
-  id: crypto.randomUUID(),
-  place: "London",
-  priority: "Low",
-  status: "Visited",
-  date: "May 2027",
-  favorite: false
-  },
-  {
-  id: crypto.randomUUID(),
-  place: "Oman",
-  priority: "High",
-  status: "Dreaming",
-  date: "May 2027",
-  favorite: false
-  },
-   {
-  id: crypto.randomUUID(),
-  place: "Greece",
-  priority: "High",
-  status: "Dreaming",
-  date: "May 2027",
-  favorite: false
-  },
-  {
-  id: crypto.randomUUID(),
-  place: "Spain",
-  priority: "Medium",
-  status: "Planning",
-  date: "May 2027",
-  favorite: false
-  },
-     {
-  id: crypto.randomUUID(),
-  place: "Croatia",
-  priority: "Medium",
-  status: "Booked",
-  date: "May 2027",
-  favorite: false
-  },
-     {
-  id: crypto.randomUUID(),
-  place: "Bratislava",
-  priority: "Low",
-  status: "Planning",
-  date: "May 2027",
-  favorite: false
-  },
-  {id: crypto.randomUUID(),
-  place: "Sweden",
-  priority: "High",
-  status: "Booked",
-  date: "May 2027",
-  favorite: false
-  },
-     {
-  id: crypto.randomUUID(),
-  place: "France",
-  priority: "Medium",
-  status: "Planning",
-  date: "May 2027",
-  favorite: false
-  }]
+const [destinations, setDestinantions] = useState(() => {
+  const savedDestinations = localStorage.getItem("destinations")
+  
+  if (savedDestinations) {
+    return JSON.parse(savedDestinations);
+  }
+
+  return initialDestinations;
+}
 );
+
+useEffect(() => {
+  localStorage.setItem(
+    "destinations",
+    JSON.stringify(destinations)
+  );
+}, [destinations]);
 
 const priorityColor = {
   Low: "#EAF7EF",
