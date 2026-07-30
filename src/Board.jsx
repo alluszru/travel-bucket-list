@@ -17,8 +17,17 @@ return (
             destination.priority.toLowerCase().includes(search) ||
             destination.status.toLowerCase().includes(search)
           );
-        })
+        }) 
+          .filter((destination) => {
+              if (!props.showFavoriteOnly) {
+                return true;
+              }
+
+              return destination.favorite;
+            });
       
+          
+                
         return (
           <Column
             key={column}

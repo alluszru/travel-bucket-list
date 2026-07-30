@@ -7,6 +7,7 @@ import Card from './Card';
 import { arrayMove } from '@dnd-kit/sortable';
 import { act } from 'react';
 import initialDestinations from './data/destiantion';
+import Statistics from './Statistics'
 
 function App() {
 
@@ -19,7 +20,7 @@ const columnsLabelImage = {
   Visited: "🌏"
 }
 
-const [destinations, setDestinantions] = useState(() => {
+const [destinations, setDestinations] = useState(() => {
   const savedDestinations = localStorage.getItem("destinations")
   
   if (savedDestinations) {
@@ -54,6 +55,7 @@ const priorityTextColor = {
   const [draggedDestination, setDraggedDestination] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [search, setSearch] = useState("");
+  const [showFavoriteOnly, setShowFavoriteOnly] = useState(false);
 
   function toggleDarkMode() {
     setIsDarkMode((prev) => !prev)
@@ -73,6 +75,10 @@ const priorityTextColor = {
 
   }
 
+  function toggleShowFavorite() {
+    setShowFavoriteOnly((prev) => !prev)
+  }
+
   function openDestination(destination) {
   
       setSelectedDestination(destination);
@@ -86,7 +92,7 @@ function handleSaveDestination(destination) {
   };
 
   if (selectedDestination) {
-    setDestinantions((prev) => 
+    setDestinations((prev) => 
       prev.map((item) => {
         if (item.id === destination.id) {
         return destinationToSave;
@@ -100,7 +106,7 @@ function handleSaveDestination(destination) {
       id: crypto.randomUUID(),
       date: destination.date?.format("YYYY-MM-DD")
     };
-    setDestinantions((prev) => [...prev, newDestination]);
+    setDestinations((prev) => [...prev, newDestination]);
   }
 }
 
@@ -109,7 +115,7 @@ function changeFavorite(destination) {
     ...destination,
     favorite: !destination.favorite
   };
-  setDestinantions((prev) => 
+  setDestinations((prev) => 
     prev.map((item) => {
       if (item.id === destination.id) {
         return destinationToSave
@@ -120,7 +126,7 @@ function changeFavorite(destination) {
 
 function handleDeleteDestination(id) {
 
-  setDestinantions((prev) => {
+  setDestinations((prev) => {
     return prev.filter((destiantion) => id !== destiantion.id
        );
       });
@@ -175,7 +181,7 @@ function onDragEnd (event) {
     d => d.status === over.id
 );
    if (cardsInColumn.length === 0) {
-    setDestinantions((prev) => 
+    setDestinations((prev) => 
      prev.map(item => 
       item.id === active.id ? {...item, status: over.id} : item
       )
@@ -190,7 +196,7 @@ function onDragEnd (event) {
       };
 
         withoutActive.splice(lastIndex+1, 0, updatedDestination);
-    setDestinantions(withoutActive);
+    setDestinations(withoutActive);
 
   }
    setDraggedDestination(null);
@@ -198,7 +204,7 @@ function onDragEnd (event) {
   }
    /* sorted in the same column */
   if (overDestination.status === draggedDestination.status) {
-      setDestinantions((prev) => arrayMove(prev, oldIndex, newIndex));
+      setDestinations((prev) => arrayMove(prev, oldIndex, newIndex));
 
   /* sorted in not empty column */
     } else {
@@ -214,7 +220,7 @@ function onDragEnd (event) {
       
 
     withoutActive.splice(insertIndex, 0, updatedDestination);
-    setDestinantions(withoutActive);
+    setDestinations(withoutActive);
   }
 
   setDraggedDestination(null);
@@ -233,6 +239,9 @@ function onDragEnd (event) {
        toggleDarkMode={toggleDarkMode}
        search={search}
        setSearch={setSearch}
+       showFavoriteOnly={showFavoriteOnly}
+       setShowFavoriteOnly={setShowFavoriteOnly}
+       toggleShowFavorite={toggleShowFavorite}
       />
       <DestinationDialog
         closeDialog={closeDialog}
@@ -243,6 +252,13 @@ function onDragEnd (event) {
         onDelete={handleDeleteDestination}
       />
       <main>
+        {/* to be probably removed or redisign
+        <Statistics 
+         destinations={destinations}
+         columnsLabelImage={columnsLabelImage}
+         columns={columns}
+        />
+        */}
         <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd} collisionDetection={pointerWithin}>
           <Board 
             destinations={destinations}
@@ -256,6 +272,8 @@ function onDragEnd (event) {
             changeFavorite={changeFavorite}
             search={search}
             setSearch={setSearch}
+            showFavoriteOnly={showFavoriteOnly}
+             setShowFavoriteOnly={setShowFavoriteOnly}
           />
           <DragOverlay>
             {draggedDestination && <Card 

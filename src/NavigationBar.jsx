@@ -11,6 +11,9 @@ import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import StarBorderPurple500OutlinedIcon from '@mui/icons-material/StarBorderPurple500Outlined';
+import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import TextField from '@mui/material/TextField';
 
 
 
@@ -88,9 +91,14 @@ function NavigationBar(props) {
             >
                 Travel <span className="accentText">Bucket</span> List
             </Typography>
+              <IconButton   onClick={() => props.toggleShowFavorite()}>
+                {props.showFavoriteOnly ? <StarOutlinedIcon className="themeButton favIcon"/> : <StarBorderPurple500OutlinedIcon className="themeButton favIcon" />}
+                <Typography className='favOnly'>Favorites only</Typography>
+            </IconButton>
             <Button className="addButton" onClick={props.openDialog}>
                   <AddIcon />
             </Button>
+          
             <Search>
                 <SearchIconWrapper>
                 <SearchIcon sx={{color:"var(--color-text-secondary)" }} />
