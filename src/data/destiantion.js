@@ -1,6 +1,7 @@
 const initialDestinations = [ {
   id: crypto.randomUUID(),
-  place: "London",
+  city: "London",
+  country: "England",
   priority: "Low",
   status: "Visited",
   date: "May 2027",
@@ -8,7 +9,8 @@ const initialDestinations = [ {
   },
   {
   id: crypto.randomUUID(),
-  place: "Oman",
+  city: "Maskat",
+  country: "Oman",
   priority: "High",
   status: "Dreaming",
   date: "May 2027",
@@ -16,7 +18,8 @@ const initialDestinations = [ {
   },
    {
   id: crypto.randomUUID(),
-  place: "Greece",
+  city: "Athens",
+  country: "Greece",
   priority: "High",
   status: "Dreaming",
   date: "May 2027",
@@ -24,7 +27,8 @@ const initialDestinations = [ {
   },
   {
   id: crypto.randomUUID(),
-  place: "Spain",
+  city: "Barcelona",
+  country: "Spain",
   priority: "Medium",
   status: "Planning",
   date: "May 2027",
@@ -32,7 +36,8 @@ const initialDestinations = [ {
   },
      {
   id: crypto.randomUUID(),
-  place: "Croatia",
+  city: "Split",
+  country: "Croatia",
   priority: "Medium",
   status: "Booked",
   date: "May 2027",
@@ -40,14 +45,16 @@ const initialDestinations = [ {
   },
      {
   id: crypto.randomUUID(),
-  place: "Bratislava",
+  city: "Bratislava",
+  country: "Slovakia",
   priority: "Low",
   status: "Planning",
   date: "May 2027",
   favorite: false
   },
   {id: crypto.randomUUID(),
-  place: "Sweden",
+   city: "Stockholm",
+  country: "Sweden",
   priority: "High",
   status: "Booked",
   date: "May 2027",
@@ -55,7 +62,8 @@ const initialDestinations = [ {
   },
      {
   id: crypto.randomUUID(),
-  place: "France",
+  city: "Paris",
+  country: "France",
   priority: "Medium",
   status: "Planning",
   date: "May 2027",

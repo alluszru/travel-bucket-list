@@ -30,7 +30,8 @@ const {
                     <Card 
                      key={card.id}
                      id ={card.id}
-                     place = {card.place}
+                     city = {card.city}
+                     country={card.country}
                      priority={card.priority}
                      date={card.date}
                      favorite={card.favorite}

@@ -13,7 +13,8 @@ return (
           const search = props.search.toLowerCase();
 
           return (
-            destination.place.toLowerCase().includes(search) ||
+            destination.city.toLowerCase().includes(search) ||
+            destination.country.toLowerCase().includes(search) ||
             destination.priority.toLowerCase().includes(search) ||
             destination.status.toLowerCase().includes(search)
           );

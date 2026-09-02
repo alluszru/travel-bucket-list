@@ -23,7 +23,7 @@ function Card(props) {
     return (
         <div ref={setNodeRef} style={style} className="card" onClick={props.onClick} >
             <div className="cardHeader">
-                <h3 className="cardLabel">{props.place}</h3>
+                <h3 className="cardLabel"> {props.city}, {props.country} </h3>
                 <IconButton className="themeButton" ref={setActivatorNodeRef} {...listeners} {...attributes}>
                 <DragIndicatorOutlinedIcon className="cardDragIndicator"  />
                 </IconButton>

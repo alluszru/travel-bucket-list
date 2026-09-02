@@ -23,6 +23,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { useEffect } from "react";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import InputLabel from '@mui/material/InputLabel';
+import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
+import WbCloudyOutlinedIcon from '@mui/icons-material/WbCloudyOutlined';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -81,7 +83,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function DestinationDialog(props) {
 
     const initialFormData = {
-                    place: "",
+                    city: "",
+                    country: "",
                     status: "",
                     priority: "",
                     date: null,
@@ -121,9 +124,9 @@ function DestinationDialog(props) {
         }));
     }
     const [errors, setErrors] = useState({  
-        place: "",
+        city: "",
+        country: "",
         priority: "",
-        
     });
 
 
@@ -131,8 +134,12 @@ function DestinationDialog(props) {
     function validateForm () {
         const newErrors = {};
 
-        if(!formData.place) {
-            newErrors.place = "Place is required";
+        if(!formData.city) {
+          newErrors.city = "City is required";
+        }
+
+        if(!formData.country) {
+          newErrors.country = "Country is required";
         }
 
         if (!formData.priority) {
@@ -143,6 +150,13 @@ function DestinationDialog(props) {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     }
+    
+    function handleCloseDialog() {
+      setFormData(initialFormData);
+      props.closeDialog();
+    }
+
+  
 
     function handleSave() {
         if (!validateForm()) {
@@ -151,23 +165,22 @@ function DestinationDialog(props) {
       
          props.onSave(formData);
         
-      setFormData(initialFormData);
-      props.closeDialog();
+      handleCloseDialog();
     }
 
     function handleDelete() {
       props.onDelete(props.selectedDestination.id)
-      props.closeDialog();
+      handleCloseDialog();
       
     }
 
-  
+   
   return (
     <React.Fragment>
    
     
       <BootstrapDialog
-        onClose={props.closeDialog}
+        onClose={handleCloseDialog}
         aria-labelledby="customized-dialog-title"
         open={props.open}      
       >
@@ -179,7 +192,7 @@ function DestinationDialog(props) {
             }}/> Add destination
         </DialogTitle>
         <IconButton
-          onClick={props.closeDialog}
+          onClick={handleCloseDialog}
         
           sx={(theme) => ({
             position: 'absolute',
@@ -197,14 +210,24 @@ function DestinationDialog(props) {
            
         
           <TextField  fullWidth
-          value={formData.place}  
+          value={formData.city}  
           onChange={handleChange} 
-          name="place" 
+          name="city" 
           variant="outlined" 
-          label="Place" 
+          label="City" 
           className='formField' 
-          error={Boolean(errors.place)} 
-          helperText={errors.place}/>
+          error={Boolean(errors.city)} 
+          helperText={errors.city}/>
+
+            <TextField  fullWidth
+          value={formData.country}  
+          onChange={handleChange} 
+          name="country" 
+          variant="outlined" 
+          label="Country" 
+          className='formField' 
+          error={Boolean(errors.country)} 
+          helperText={errors.country}/>
        
         
         <FormControl fullWidth>
@@ -244,6 +267,15 @@ function DestinationDialog(props) {
                     </LocalizationProvider>
         </FormControl>
               </div>
+        {props.selectedDestination && props.weather && (
+          <div>
+             <p>Weather</p>
+             {(props.weather.clouds.all > 30)? <WbCloudyOutlinedIcon/> : <WbSunnyOutlinedIcon/> }
+
+             <p>{Math.floor(props.weather.main.temp)}</p>
+             <p>Wind: {Math.floor(props.weather.wind.speed)} m/s</p>
+          </div>
+        )}
         </DialogContent>
         <DialogActions sx={{ justifyContent: "space-between", padding: 2, }}>
         <IconButton>
@@ -251,7 +283,7 @@ function DestinationDialog(props) {
         color: "var(--color-primary)"}} onClick={handleDelete} />
         </IconButton>
         <div>
-        <Button autoFocus onClick={props.closeDialog} variant="text" sx={{
+        <Button autoFocus onClick={handleCloseDialog} variant="text" sx={{
         color: "var(--color-primary)"}}>
             Cancel 
           </Button>

@@ -8,6 +8,9 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { act } from 'react';
 import initialDestinations from './data/destiantion';
 import Statistics from './Statistics'
+import { getWeather } from './services/weather';
+import { getCoordinates } from "./services/weather";
+
 
 function App() {
 
@@ -22,7 +25,7 @@ const columnsLabelImage = {
 
 const [destinations, setDestinations] = useState(() => {
   const savedDestinations = localStorage.getItem("destinations")
-  
+  console.log(savedDestinations)
   if (savedDestinations) {
     return JSON.parse(savedDestinations);
   }
@@ -56,6 +59,7 @@ const priorityTextColor = {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [search, setSearch] = useState("");
   const [showFavoriteOnly, setShowFavoriteOnly] = useState(false);
+  const [weather, setWeather] = useState(null);
 
   function toggleDarkMode() {
     setIsDarkMode((prev) => !prev)
@@ -72,23 +76,30 @@ const priorityTextColor = {
 
   function closeDialog() {
     setOpen(false);
-
+    setWeather(null);
   }
 
   function toggleShowFavorite() {
     setShowFavoriteOnly((prev) => !prev)
   }
 
-  function openDestination(destination) {
-  
+ async function openDestination(destination) {
+  const data = await getWeather(
+    destination.lat, 
+    destination.lon,
+  );
+
+  setWeather(data);
+  console.log(weather)
       setSelectedDestination(destination);
       openDialog();
   }
 
-function handleSaveDestination(destination) {
+async function handleSaveDestination(destination) {
   const destinationToSave = {
     ...destination,
     date: destination.date?.format("YYYY-MM-DD"),
+   
   };
 
   if (selectedDestination) {
@@ -101,10 +112,17 @@ function handleSaveDestination(destination) {
       })
     );
     } else {
+      const coordinates = await getCoordinates(
+        destination.city,
+        destination.country
+      );
+      console.log(coordinates);
        const newDestination = {
       ...destinationToSave,
       id: crypto.randomUUID(),
-      date: destination.date?.format("YYYY-MM-DD")
+      date: destination.date?.format("YYYY-MM-DD"),
+      lat: coordinates.lat,
+      lon: coordinates.lon
     };
     setDestinations((prev) => [...prev, newDestination]);
   }
@@ -250,15 +268,9 @@ function onDragEnd (event) {
         selectedDestination={selectedDestination}
         destinations={destinations}
         onDelete={handleDeleteDestination}
+        weather={weather}
       />
       <main>
-        {/* to be probably removed or redisign
-        <Statistics 
-         destinations={destinations}
-         columnsLabelImage={columnsLabelImage}
-         columns={columns}
-        />
-        */}
         <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd} collisionDetection={pointerWithin}>
           <Board 
             destinations={destinations}
@@ -273,12 +285,13 @@ function onDragEnd (event) {
             search={search}
             setSearch={setSearch}
             showFavoriteOnly={showFavoriteOnly}
-             setShowFavoriteOnly={setShowFavoriteOnly}
+            setShowFavoriteOnly={setShowFavoriteOnly}
           />
           <DragOverlay>
             {draggedDestination && <Card 
               id={draggedDestination.id}
-              place={draggedDestination.place}
+              city={draggedDestination.city}
+              country={draggedDestination.country}
               priority={draggedDestination.priority}
               date={draggedDestination.date}
               favorite={draggedDestination.favorite}
