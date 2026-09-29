@@ -7,14 +7,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useState } from 'react';
@@ -23,9 +21,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { useEffect } from "react";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import InputLabel from '@mui/material/InputLabel';
-import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
-import WbCloudyOutlinedIcon from '@mui/icons-material/WbCloudyOutlined';
-
+import Weather from './Weather';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiPaper-root": {
@@ -146,6 +142,10 @@ function DestinationDialog(props) {
             newErrors.priority = "Priority is required";
         }
 
+        if(!formData.status) {
+          newErrors.status = "Status is required"
+        }
+
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -230,7 +230,7 @@ function DestinationDialog(props) {
           helperText={errors.country}/>
        
         
-        <FormControl fullWidth>
+        <FormControl fullWidth error={Boolean(errors.status)}>
              <InputLabel id="status-label">Status</InputLabel>
   
                 <Select value={formData.status}
@@ -240,6 +240,7 @@ function DestinationDialog(props) {
                     <MenuItem value={"Booked"}>Booked</MenuItem>
                     <MenuItem value={"Visited"}>Visited</MenuItem>
                 </Select>
+                 <FormHelperText>{errors.status}</FormHelperText>
         </FormControl>
         
         <FormControl fullWidth error={Boolean(errors.priority)} >
@@ -267,15 +268,8 @@ function DestinationDialog(props) {
                     </LocalizationProvider>
         </FormControl>
               </div>
-        {props.selectedDestination && props.weather && (
-          <div>
-             <p>Weather</p>
-             {(props.weather.clouds.all > 30)? <WbCloudyOutlinedIcon/> : <WbSunnyOutlinedIcon/> }
-
-             <p>{Math.floor(props.weather.main.temp)}</p>
-             <p>Wind: {Math.floor(props.weather.wind.speed)} m/s</p>
-          </div>
-        )}
+        <Weather weather={props.weather} loading={props.weatherLoading} error={props.weatherError} />
+       
         </DialogContent>
         <DialogActions sx={{ justifyContent: "space-between", padding: 2, }}>
         <IconButton>

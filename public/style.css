@@ -365,4 +365,58 @@ main {
  color: var(--color-accent);
 }
 
+.weatherError {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
 
+.weatherContainer {
+  display: inline-flex;
+  flex-direction: column;
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var( --color-border);
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-sm);
+}
+
+
+.weatherHeader{
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-sm);
+  
+}
+
+.weatherIcon {
+  max-width: 96px;
+  max-height: 96px;
+}
+
+.weatherTemp {
+   font-size: var(--font-size-xl);
+   font-weight: var(--font-weight-bold);
+
+}
+
+.weatherDetails {
+ display: flex;
+ flex-wrap: wrap;
+ gap: var(--space-md);
+ font-size: var(--font-size-sm);
+ color: var(--color-text-secondary);
+ margin-top: var(--space-sm);
+}
+
+
+.weatherInfo {
+
+  font-size: var(--font-size-sm);
+  color:var(--color-text-secondary);
+  font-weight: var(--font-weight-small);
+}

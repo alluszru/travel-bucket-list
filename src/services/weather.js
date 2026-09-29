@@ -6,24 +6,37 @@ export async function getWeather(lat, lon) {
     const API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
     const response = await fetch(API_URL)
 
-    const data = await response.json();
-    
-
-    if (!response.ok) {
+     if (!response.ok) {
         throw new Error ("Error fetching weather")
     }
 
-    return data;
+    const data = await response.json();
+    
+
+    return {
+        city: data.name,
+        description: data.weather[0].description,
+        icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+        temp: Math.round(data.main.temp),
+        feelsLike: Math.round(data.main.feels_like),
+        windSpeed: Math.round(data.wind.speed),
+        humidity: data.main.humidity
+    }   
 
 }
 
 export async function getCoordinates(city, country) {
-    const API_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${city}, ${country}&limit=1&appid=${API_KEY}`
+    const API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=1&appid=${API_KEY}`
     const response = await fetch(API_URL)
-    const data = await response.json();
-
+    
      if (!response.ok) {
         throw new Error ("Error fetching weather")
+    }
+
+    const data = await response.json();
+
+    if (data.length === 0) {
+        throw new Error ("No coordinates")
     }
 
     return { 
@@ -31,3 +44,11 @@ export async function getCoordinates(city, country) {
         lon: data[0].lon
     };
 }
+
+
+export async function getWeatherForDestination(destination) {
+    const coordinates = await getCoordinates(destination.city, destination.country);
+    const weather = await getWeather(coordinates.lat, coordinates.lon);
+    return weather;
+}
+ 

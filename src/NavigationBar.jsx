@@ -13,9 +13,6 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import StarBorderPurple500OutlinedIcon from '@mui/icons-material/StarBorderPurple500Outlined';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import TextField from '@mui/material/TextField';
-
-
 
     const Search = styled('div')(({ theme }) => ({
     position: 'relative',

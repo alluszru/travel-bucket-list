@@ -5,11 +5,9 @@ import DestinationDialog from './DestinationDialog';
 import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
 import Card from './Card';
 import { arrayMove } from '@dnd-kit/sortable';
-import { act } from 'react';
 import initialDestinations from './data/destiantion';
-import Statistics from './Statistics'
-import { getWeather } from './services/weather';
-import { getCoordinates } from "./services/weather";
+import { getWeatherForDestination } from './services/weather';
+
 
 
 function App() {
@@ -25,7 +23,6 @@ const columnsLabelImage = {
 
 const [destinations, setDestinations] = useState(() => {
   const savedDestinations = localStorage.getItem("destinations")
-  console.log(savedDestinations)
   if (savedDestinations) {
     return JSON.parse(savedDestinations);
   }
@@ -60,6 +57,8 @@ const priorityTextColor = {
   const [search, setSearch] = useState("");
   const [showFavoriteOnly, setShowFavoriteOnly] = useState(false);
   const [weather, setWeather] = useState(null);
+  const [weatherLoading, setWeatherLoading] = useState(false);
+  const [weatherError, setWeatherError] = useState(null);
 
   function toggleDarkMode() {
     setIsDarkMode((prev) => !prev)
@@ -69,6 +68,29 @@ const priorityTextColor = {
   document.body.classList.toggle("dark", isDarkMode);
 }, [isDarkMode]);
   
+useEffect(() => {
+  if (!selectedDestination?.id) return
+
+  setWeather(null);
+  setWeatherError(null);
+  setWeatherLoading(true)
+
+  async function weatherDisplay() {
+    try {
+      const data =  await getWeatherForDestination(selectedDestination) 
+      setWeather(data)
+    } 
+   catch(err) {
+      setWeatherError("Error with weather loading")
+    }
+    finally {
+       setWeatherLoading(false)
+    }
+  }
+
+  weatherDisplay()
+}, [selectedDestination?.id]
+)
 
  function openDialog() {
   setOpen(true);
@@ -77,20 +99,15 @@ const priorityTextColor = {
   function closeDialog() {
     setOpen(false);
     setWeather(null);
+    setWeatherError(null);
+    setWeatherLoading(false)
   }
 
   function toggleShowFavorite() {
     setShowFavoriteOnly((prev) => !prev)
   }
 
- async function openDestination(destination) {
-  const data = await getWeather(
-    destination.lat, 
-    destination.lon,
-  );
-
-  setWeather(data);
-  console.log(weather)
+function openDestination(destination) {
       setSelectedDestination(destination);
       openDialog();
   }
@@ -112,17 +129,10 @@ async function handleSaveDestination(destination) {
       })
     );
     } else {
-      const coordinates = await getCoordinates(
-        destination.city,
-        destination.country
-      );
-      console.log(coordinates);
        const newDestination = {
       ...destinationToSave,
       id: crypto.randomUUID(),
       date: destination.date?.format("YYYY-MM-DD"),
-      lat: coordinates.lat,
-      lon: coordinates.lon
     };
     setDestinations((prev) => [...prev, newDestination]);
   }
@@ -155,8 +165,6 @@ function handleDeleteDestination(id) {
 function onDragStart(event) {
   const destination = destinations.find(
     (destination) => destination.id === event.active.id)
-    console.log(destination)
-
     setDraggedDestination(destination);
 }
 
@@ -269,6 +277,8 @@ function onDragEnd (event) {
         destinations={destinations}
         onDelete={handleDeleteDestination}
         weather={weather}
+        weatherLoading={weatherLoading}
+        weatherError={weatherError}
       />
       <main>
         <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd} collisionDetection={pointerWithin}>
