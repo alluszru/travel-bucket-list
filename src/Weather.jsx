@@ -24,10 +24,10 @@ function Weather(props) {
                 </div>
                     <p className="weatherInfo"> {props.weather.description}</p>  
                 <div className="weatherDetails">
-                    
                     <p className="weatherInfo">feels-like: {props.weather.feelsLike}°C</p>
                     <p className="weatherInfo">wind: {props.weather.windSpeed} m/s</p>
                     <p className="weatherInfo">humidity: {props.weather.humidity}%</p>
+                    <p className="weatherInfo"> {props.weather.utcOffset}</p>
                 </div>
           
             </div>

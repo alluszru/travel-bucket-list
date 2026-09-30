@@ -1,5 +1,18 @@
 const API_KEY = import.meta.env.VITE_API_KEY;
 
+function formatUtcOffset(offsetSeconds) {
+    const sign = offsetSeconds < 0 ? "-" : "+" 
+    const absSeconds = Math.abs(offsetSeconds);
+    const totalMinutes = absSeconds/60;
+    const wholeHours = Math.floor(totalMinutes/60);
+    const remainingMinutes = totalMinutes % 60
+
+    if (remainingMinutes === 0) {
+        return `UTC${sign}${wholeHours}`
+    } else {
+        return `UTC${sign}${wholeHours}:${remainingMinutes}`
+    }
+}
 
 export async function getWeather(lat, lon) {
 
@@ -20,9 +33,9 @@ export async function getWeather(lat, lon) {
         temp: Math.round(data.main.temp),
         feelsLike: Math.round(data.main.feels_like),
         windSpeed: Math.round(data.wind.speed),
-        humidity: data.main.humidity
-    }   
-
+        humidity: data.main.humidity,
+        utcOffset: formatUtcOffset(data.timezone)
+    }  
 }
 
 export async function getCoordinates(city, country) {
