@@ -7,6 +7,7 @@ import Card from './Card';
 import { arrayMove } from '@dnd-kit/sortable';
 import initialDestinations from './data/destiantion';
 import { getWeatherForDestination } from './services/weather';
+import Statistics from './Statistics'
 
 
 
@@ -280,7 +281,12 @@ function onDragEnd (event) {
         weatherLoading={weatherLoading}
         weatherError={weatherError}
       />
+    
       <main>
+        <Statistics
+          destinations={destinations}
+          columnsLabelImage={columnsLabelImage}
+        />
         <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd} collisionDetection={pointerWithin}>
           <Board 
             destinations={destinations}

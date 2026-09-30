@@ -32,7 +32,7 @@ function Statistics(props) {
                     {visited}
                 </div> 
                 </div>
-            <div className="statsLabel">  <StarOutlinedIcon/> 
+            <div className="statsLabel">  <StarOutlinedIcon className="favIcon"/> 
                 <div className="statNumber">
                     {favorite}
                 </div> 
